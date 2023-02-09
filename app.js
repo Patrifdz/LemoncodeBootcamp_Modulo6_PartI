@@ -102,32 +102,37 @@ function createElementHTML (element, id, clase, mother, valorMin, valorMax) {
         
 
 // Función para calcular subtotal:
-function calcularSubtotal() {
+function calcularTotal() {
     var subtotal=0;
-    for(product in products) {
-        var input = parseInt(document.getElementById("input"+product).value);
-        subtotal += input * products[product].price;
-    }
-    return subtotal.toFixed(2);
-}
-
-// Función para calcular impuestos:
-function calcularImpuestos() {
     var impuestos=0;
     for(product in products) {
         var input = parseInt(document.getElementById("input"+product).value);
+        subtotal += input * products[product].price;
         impuestos += products[product].price * (input*products[product].tax/100);
     }
-    return impuestos.toFixed(2); 
-}
-
-// Función para imprimir los resultados en el HTML: 
-function printResults () {
-    var total = parseFloat(calcularSubtotal()) + parseFloat(calcularImpuestos());
-    document.getElementById("subtotal").textContent = calcularSubtotal();
-    document.getElementById("impuestos").textContent = calcularImpuestos();
-    document.getElementById("total").textContent = total.toFixed(2);
+        document.getElementById("subtotal").textContent = subtotal.toFixed(2);
+        document.getElementById("impuestos").textContent = impuestos.toFixed(2);
+        document.getElementById("total").textContent = (subtotal + impuestos).toFixed(2);
 }
 
 var boton = document.getElementById("button");
-boton.addEventListener("click", printResults);
+boton.addEventListener("click", calcularTotal);
+boton.disabled = true;
+function botonAbled () {
+    var valor = 0;
+    boton.disabled = true;
+    for(product in products) {
+        var input = document.getElementById("input"+product).value;
+        valor += input;
+    }
+    if(valor!=0) {
+        boton.disabled = false;
+    } else calcularTotal();
+}
+
+for(product in products) {
+    var input = document.getElementById("input"+product);
+    input.addEventListener("change", botonAbled); 
+}
+
+

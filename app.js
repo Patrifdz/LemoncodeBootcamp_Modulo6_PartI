@@ -64,14 +64,18 @@ const products = [
     ];
 
 //Creo un fragment para no sobrecargar el document (lo he mirado por Internet, pero no tengo muy claro que es el "reflow"). Creo una lista ordenada y la asigno como hija del fragment. Le asigno también un "id" para poder usarla después como madre de los elementos que cree para la lista:
-var fragment = document.createDocumentFragment();
-var listaOrdenada = document.createElement("ol");
-listaOrdenada.setAttribute("id","list");
-fragment.appendChild(listaOrdenada);
-//El fragment lo asigno como hijo al main que tengo creado en el html:
-var main = document.getElementById("main");
-main.appendChild(fragment);
 
+function createFragment() {
+    var fragment = document.createDocumentFragment();
+    var listaOrdenada = document.createElement("ol");
+    listaOrdenada.setAttribute("id","list");
+    fragment.appendChild(listaOrdenada);
+    //El fragment lo asigno como hijo al main que tengo creado en el html:
+    var main = document.getElementById("main");
+    main.appendChild(fragment);
+}
+
+createFragment();
 // Función para crear elementos en el Html con JavaScript:
 function createElementHTML (element, id, clase, mother, valorMin, valorMax) {
     var element = document.createElement(element);
